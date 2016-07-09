@@ -1,9 +1,9 @@
 package environment;
 
-import environment.resolver.container.dependency_injection.*;
+import environment.container.dependency_injection.*;
+import environment.container.ContainerResolver;
 import environment.unit.Container;
 import environment.unit.Extension;
-import environment.resolver.container.ContainerResolver;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -17,7 +17,7 @@ public class AppRegister {
 
     private Container container;
 
-    AppRegister() {
+    public AppRegister() {
         this.container = new Container();
         this.resources = new LinkedList<>();
         this.extensions = new LinkedList<>();
@@ -26,7 +26,7 @@ public class AppRegister {
         this.registerResolvers();
     }
 
-    final AppRegister registerResource(File resource) {
+    final public AppRegister registerResource(File resource) {
         if (resource.exists()) {
             this.resources.add(resource);
         }
@@ -34,14 +34,14 @@ public class AppRegister {
         return this;
     }
 
-    final AppRegister registerResolver(ContainerResolver resolver) {
+    final public AppRegister registerResolver(ContainerResolver resolver) {
         resolver.setContainer(this.container);
         this.resolvers.add(resolver);
 
         return this;
     }
 
-    final AppRegister registerExtension(Extension extension) {
+    final public AppRegister registerExtension(Extension extension) {
         extension.setContainer(this.container);
         this.extensions.add(extension);
 
@@ -60,7 +60,7 @@ public class AppRegister {
         return this.resources;
     }
 
-    final Container getContainer() {
+    final public  Container getContainer() {
         return this.container;
     }
 

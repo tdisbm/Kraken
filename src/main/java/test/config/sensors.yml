@@ -1,5 +1,0 @@
-sensors:
-    DHT22:
-        class: test.sensors.DHT22
-        arguments:
-          - parameters.DHT22_pin

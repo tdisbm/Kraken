@@ -1,4 +1,4 @@
-package environment.resolver.container;
+package environment.container;
 
 import environment.unit.Extension;
 import environment.unit.Container;

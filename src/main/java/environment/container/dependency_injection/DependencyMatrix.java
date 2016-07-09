@@ -1,4 +1,4 @@
-package environment.resolver.container.dependency_injection;
+package environment.container.dependency_injection;
 
 import environment.unit.Container;
 

@@ -27,6 +27,9 @@ public class ControllerSwitcher
 
     public Stage load(Controller controller) throws Exception {
         this.stage.setScene(fetchScene(controller));
+        this.stage.setOnCloseRequest(event -> {
+            System.exit(1);
+        });
 
         return this.stage;
     }

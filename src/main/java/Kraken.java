@@ -1,18 +1,17 @@
-package environment;
-
-import environment.extension.ParameterExtension;
+import environment.AppRegister;
+import environment.extension.parameter.ParameterExtension;
 import environment.extension.scene.FXExtension;
 import environment.extension.sensor.SensorExtension;
 import environment.extension.task.TaskExtension;
 import environment.unit.Extension;
-import environment.resolver.container.ContainerResolver;
+import environment.container.ContainerResolver;
 
 import java.io.File;
 
 public class Kraken {
     private AppRegister register = new AppRegister();
 
-    final public void dive() {
+    final public Kraken dive() {
         long startTime = System.currentTimeMillis();
 
         this.registerExtensions()
@@ -21,6 +20,8 @@ public class Kraken {
         long endTime = System.currentTimeMillis();
         System.out.printf("[+] Kraken is running! \n - Compile time: %d ms", endTime - startTime);
         System.gc();
+
+        return this;
     }
 
     final public Kraken sink(Object o) {

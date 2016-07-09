@@ -1,4 +1,4 @@
-package environment.resolver.container.dependency_injection;
+package environment.container.dependency_injection;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import environment.component.tree_builder.TreeBuilder;

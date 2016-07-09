@@ -1,8 +1,7 @@
-package environment.extension;
+package environment.extension.parameter;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import environment.component.extension.Configurator;
 import environment.component.tree_builder.nodes.DependencyNode;
 import environment.unit.Extension;
 import environment.component.tree_builder.TreeBuilder;

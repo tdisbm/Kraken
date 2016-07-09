@@ -1,10 +1,10 @@
-package environment.resolver.container.dependency_injection;
+package environment.container.dependency_injection;
 
 import environment.component.tree_builder.TreeBuilder;
 import environment.component.tree_builder.nodes.DependencyNode;
 import environment.component.tree_builder.nodes.InstanceNode;
 import environment.unit.Container;
-import environment.resolver.container.ContainerResolver;
+import environment.container.ContainerResolver;
 
 import java.util.*;
 import java.util.stream.Collectors;

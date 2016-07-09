@@ -92,7 +92,12 @@ public class Container
     }
 
     private boolean extend(String definition, Extension ext) {
-        return this.extensionMap.get(ext.getRootName()).contains(definition);
+        boolean result = false;
+        try {
+            result = this.extensionMap.get(ext.getRootName()).contains(definition);
+        } catch (Exception ignored) {}
+
+        return result;
     }
 
     private void loadResources() {
