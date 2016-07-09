@@ -1,10 +1,10 @@
-import environment.AppRegister;
-import environment.extension.parameter.ParameterExtension;
-import environment.extension.scene.FXExtension;
-import environment.extension.sensor.SensorExtension;
-import environment.extension.task.TaskExtension;
-import environment.unit.Extension;
-import environment.container.ContainerResolver;
+import kraken.AppRegister;
+import kraken.extension.parameter.ParameterExtension;
+import kraken.extension.scene.FXExtension;
+import kraken.extension.sensor.SensorExtension;
+import kraken.extension.task.TaskExtension;
+import kraken.unit.Extension;
+import kraken.container.ContainerResolver;
 
 import java.io.File;
 
