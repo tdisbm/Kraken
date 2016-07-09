@@ -1,0 +1,10 @@
+controllers:
+    dashboard:
+        class: test.controllers.DashboardController
+        template: src/main/resources/dashboard.fxml
+        options:
+            - main
+
+    help_me:
+        class: test.controllers.HelpMeController
+        template: src/main/resources/help_me.fxml

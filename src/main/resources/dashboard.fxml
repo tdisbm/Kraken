@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.TextFlow?>
+
+<?import javafx.scene.control.Button?>
+
+
+<!--<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml"-->
+    <!--fx:controller="test.controllers.DashboardController">-->
+   <!--<TextField fx:id="textField"/>-->
+   <!--<Button text="Click Me" onAction="#doSomething"/>-->
+<!--</fx:root>-->
+
+<!--<fx:root type="environment.extensions.scene.controller.Controller" fx:controller="test.controllers.DashboardController">-->
+
+<!--</fx:root>-->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/javafx"
+            fx:controller="test.controllers.DashboardController">
+   <children>
+      <StackPane alignment="TOP_CENTER" layoutX="200.0" layoutY="137.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="150.0" prefWidth="200.0">
+         <effect>
+            <Reflection />
+         </effect>
+      </StackPane>
+      <TextFlow layoutX="38.0" layoutY="37.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red; -fx-cursor: pointer;" />
+
+       <Button text="Click Me" fx:id="test" onAction="#switchTo"/>
+   </children>
+</AnchorPane>
