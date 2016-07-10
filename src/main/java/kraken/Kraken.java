@@ -1,4 +1,5 @@
-import kraken.AppRegister;
+package kraken;
+
 import kraken.container.ContainerResolver;
 import kraken.extension.parameter.ParameterExtension;
 import kraken.extension.sensor.SensorExtension;
@@ -17,7 +18,7 @@ public class Kraken {
             .loadContainer();
 
         long endTime = System.currentTimeMillis();
-        System.out.printf("[+] Kraken is running! \n - Compile time: %d ms", endTime - startTime);
+        System.out.printf("[+] kraken.Kraken is running! \n - Compile time: %d ms", endTime - startTime);
         System.gc();
 
         return this;
