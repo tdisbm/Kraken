@@ -1,11 +1,13 @@
 package kraken.extension.scene.controller;
 
 
+import javafx.scene.transform.Scale;
 import kraken.unit.Container;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -27,9 +29,6 @@ public class ControllerSwitcher
 
     public Stage load(Controller controller) throws Exception {
         this.stage.setScene(fetchScene(controller));
-        this.stage.setOnCloseRequest(event -> {
-            System.exit(1);
-        });
 
         return this.stage;
     }
@@ -55,6 +54,11 @@ public class ControllerSwitcher
             System.out.format("Fatal Error: No controller was specified in scene '%s'", controller.getTemplate());
             System.exit(1);
         }
+
+        Scale scale = new Scale(0, 0);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        scene.getRoot().getTransforms().setAll(scale);
 
         this.copy(controller, ctr);
         this.scenes.putIfAbsent(id, scene);

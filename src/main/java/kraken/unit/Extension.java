@@ -51,7 +51,7 @@ public abstract class Extension
             try {
                 this.map(
                     this.container.get(entry.getKey()),
-                    (JsonNode) this.configurator.getCommonConfig(entry.getKey())
+                    (JsonNode) this.configurator.get(entry.getKey())
                 );
             } catch (Exception e) {
                 e.printStackTrace();

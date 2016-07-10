@@ -119,7 +119,7 @@ public class Container
                 while (fields.hasNext()) {
                     definition = fields.next();
 
-                    ext.getConfigurator().setCommonConfig(
+                    ext.getConfigurator().set(
                         ext.wrap(definition),
                         definitions.get(definition)
                     );

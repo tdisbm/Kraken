@@ -37,6 +37,8 @@ final class FXLauncher {
             if (appLaunch != null) {
                 appLaunch.stop(this);
             }
+
+            System.exit(1);
         }
     }
 
