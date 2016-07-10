@@ -40,6 +40,8 @@ public class ControllerSwitcher
     private Scene fetchScene(Controller controller) throws Exception {
         int id = controller.hashCode();
 
+        this.stage.setFullScreen(controller.getOptions().get("fullscreen").asBoolean());
+
         if (this.scenes.containsKey(id)) {
             return this.scenes.get(id);
         }
@@ -54,12 +56,6 @@ public class ControllerSwitcher
             System.out.format("Fatal Error: No controller was specified in scene '%s'", controller.getTemplate());
             System.exit(1);
         }
-
-
-        Scale scale = new Scale(0, 0);
-        scale.setPivotX(0);
-        scale.setPivotY(0);
-        scene.getRoot().getTransforms().setAll(scale);
 
         this.copy(controller, ctr);
         this.scenes.putIfAbsent(id, scene);
