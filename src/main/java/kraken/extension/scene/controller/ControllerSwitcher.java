@@ -41,6 +41,7 @@ public class ControllerSwitcher
     private Scene fetchScene(Controller controller) throws Exception {
         int id = controller.hashCode();
 
+        this.stage.hide();
         this.fetchOptions(controller);
 
         if (this.scenes.containsKey(id)) {
