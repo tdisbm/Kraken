@@ -2,13 +2,11 @@ package kraken.extension.scene.controller;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
-import javafx.scene.transform.Scale;
 import kraken.unit.Container;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -30,7 +28,6 @@ public class ControllerSwitcher
 
     public Stage load(Controller controller) throws Exception {
         this.stage.setScene(fetchScene(controller));
-        this.stage.show();
         this.fetchOptions(controller);
 
         return this.stage;
@@ -50,7 +47,6 @@ public class ControllerSwitcher
         FXMLLoader loader = new FXMLLoader(new File(controller.getTemplate()).toURI().toURL());
 
         Scene scene = new Scene(loader.load());
-        loader.setRoot(this.stage);
         Controller ctr;
 
         if (null == (ctr = loader.getController())) {
@@ -88,7 +84,7 @@ public class ControllerSwitcher
         }
 
         for (JsonNode option : options) {
-            if (option.asText().equals("fullscreen")) {
+            if (option.asText().equals("fullscreen") && !this.stage.isFullScreen()) {
                 this.stage.setFullScreen(true);
             }
         }
