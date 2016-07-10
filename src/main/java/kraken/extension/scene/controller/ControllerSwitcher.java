@@ -1,6 +1,7 @@
 package kraken.extension.scene.controller;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
 import javafx.scene.transform.Scale;
 import kraken.unit.Container;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +41,7 @@ public class ControllerSwitcher
     private Scene fetchScene(Controller controller) throws Exception {
         int id = controller.hashCode();
 
-        this.stage.setFullScreen(controller.getOptions().has("fullscreen"));
+        this.fetchOptions(controller);
 
         if (this.scenes.containsKey(id)) {
             return this.scenes.get(id);
@@ -77,5 +78,15 @@ public class ControllerSwitcher
             fx.setTemplate(environment.getTemplate());
             fx.setOptions(environment.getOptions());
         } catch (NoSuchFieldException | IllegalAccessException ignored) {}
+    }
+
+    private void fetchOptions(Controller controller) {
+        JsonNode options = controller.getOptions();
+
+        for (JsonNode option : options) {
+            if (option.asText().equals("fullscreen")) {
+                this.stage.setFullScreen(true);
+            }
+        }
     }
 }
