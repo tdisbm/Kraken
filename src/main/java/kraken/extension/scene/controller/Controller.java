@@ -1,8 +1,6 @@
 package kraken.extension.scene.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import kraken.unit.Container;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -56,9 +54,7 @@ public abstract class Controller extends VBox implements Initializable {
 
     final public void switchController(Controller controller) {
         try {
-            Stage stage = this.switcher.load(controller);
-            this.switcher.fetchOptions(this);
-            stage.show();
+            this.switcher.load(controller).show();
         } catch (Exception ignored) {}
     }
 

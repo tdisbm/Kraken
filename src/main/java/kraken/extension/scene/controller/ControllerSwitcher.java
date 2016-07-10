@@ -30,6 +30,8 @@ public class ControllerSwitcher
 
     public Stage load(Controller controller) throws Exception {
         this.stage.setScene(fetchScene(controller));
+        this.stage.show();
+        this.fetchOptions(controller);
 
         return this.stage;
     }
@@ -78,7 +80,7 @@ public class ControllerSwitcher
         } catch (NoSuchFieldException | IllegalAccessException ignored) {}
     }
 
-    public void fetchOptions(Controller controller) {
+    private void fetchOptions(Controller controller) {
         JsonNode options = controller.getOptions();
 
         if (options == null) {
