@@ -55,6 +55,7 @@ public class ControllerSwitcher
             System.exit(1);
         }
 
+
         Scale scale = new Scale(0, 0);
         scale.setPivotX(0);
         scale.setPivotY(0);
