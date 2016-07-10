@@ -40,7 +40,7 @@ public class ControllerSwitcher
     private Scene fetchScene(Controller controller) throws Exception {
         int id = controller.hashCode();
 
-        this.stage.setFullScreen(controller.getOptions().get("fullscreen").asBoolean());
+        this.stage.setFullScreen(controller.getOptions().has("fullscreen"));
 
         if (this.scenes.containsKey(id)) {
             return this.scenes.get(id);
