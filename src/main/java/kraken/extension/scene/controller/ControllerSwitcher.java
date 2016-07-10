@@ -83,6 +83,10 @@ public class ControllerSwitcher
     private void fetchOptions(Controller controller) {
         JsonNode options = controller.getOptions();
 
+        if (options == null) {
+            return;
+        }
+
         for (JsonNode option : options) {
             if (option.asText().equals("fullscreen")) {
                 this.stage.setFullScreen(true);
