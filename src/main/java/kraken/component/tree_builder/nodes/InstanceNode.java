@@ -3,7 +3,6 @@ package kraken.component.tree_builder.nodes;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import kraken.component.tree_builder.chain.SupportChain;
-import jdk.nashorn.internal.runtime.regexp.joni.ast.StringNode;
 
 public class InstanceNode extends Node
 {
@@ -13,7 +12,7 @@ public class InstanceNode extends Node
 
     @Override
     public SupportChain buildSupportChain(SupportChain chain) {
-        return chain.add(StringNode.class).add(TextNode.class);
+        return chain.add(TextNode.class).add(TextNode.class);
     }
 
     public Object linearize(Object complex) {

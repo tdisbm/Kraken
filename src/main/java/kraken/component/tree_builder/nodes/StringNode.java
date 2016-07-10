@@ -11,7 +11,7 @@ public class StringNode extends Node
 
     @Override
     public SupportChain buildSupportChain(SupportChain chain) {
-        return chain.add(String.class).add(StringNode.class).add(TextNode.class);
+        return chain.add(String.class).add(TextNode.class);
     }
 
     public Object linearize(Object complex) {
