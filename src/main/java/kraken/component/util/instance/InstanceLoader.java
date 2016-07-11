@@ -2,6 +2,7 @@ package kraken.component.util.instance;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.function.BiConsumer;
 
 public class InstanceLoader {
 
@@ -31,12 +32,16 @@ public class InstanceLoader {
     public static LinkedHashMap<String, Class<?>> getClasses(LinkedHashMap<String, ?> collection) {
         LinkedHashMap<String, Class<?>> classes = new LinkedHashMap<>();
 
-        collection.forEach((key, clazz) -> {
-            try {
-                classes.put(key, Class.forName((String) clazz));
-            } catch (ClassNotFoundException e) {
-                System.out.format("Fatal error: Can't find class %s", clazz);
-                System.exit(1);
+
+        collection.forEach(new BiConsumer<String, Object>() {
+            @Override
+            public void accept(String key, Object clazz) {
+                try {
+                    classes.put(key, Class.forName((String) clazz));
+                } catch (ClassNotFoundException e) {
+                    System.out.format("Fatal error: Can't find class %s", clazz);
+                    System.exit(1);
+                }
             }
         });
 

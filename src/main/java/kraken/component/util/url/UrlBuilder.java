@@ -2,7 +2,6 @@ package kraken.component.util.url;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class UrlBuilder {
     private Map<String, String> parameters = new HashMap<>();
@@ -61,10 +60,9 @@ public class UrlBuilder {
                 break;
         }
 
-        parameters.addAll(this.parameters.entrySet().stream()
-            .map(parameter -> parameter.getKey() + "=" + parameter.getValue())
-            .collect(Collectors.toList())
-        );
+        for (Map.Entry<String, String> parameter : this.parameters.entrySet()) {
+            parameters.add(parameter.getKey() + "=" + parameter.getValue());
+        }
 
         return url + join(parameters, "&");
     }

@@ -5,6 +5,7 @@ import kraken.component.extension.Configurator;
 import kraken.component.tree_builder.TreeBuilder;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public abstract class Extension
@@ -47,17 +48,18 @@ public abstract class Extension
             return;
         }
 
-        definitions.entrySet().forEach(entry -> {
+
+        for (Map.Entry<String, ?> definition : definitions.entrySet()) {
             try {
                 this.map(
-                    this.container.get(entry.getKey()),
-                    (JsonNode) this.configurator.get(entry.getKey())
+                        this.container.get(definition.getKey()),
+                        (JsonNode) this.configurator.get(definition.getKey())
                 );
             } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
             }
-        });
+        }
 
         this.done();
         this.__mapped__ = true;

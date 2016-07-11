@@ -4,10 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import kraken.AppRegister;
+import kraken.container.ContainerResolver;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 
 public class Container
@@ -43,13 +46,29 @@ public class Container
         LinkedHashMap<String, Object> collection = new LinkedHashMap<>();
 
         this.register.getExtensions().stream()
-        .filter(ext -> ext.getRootName().equals(root))
-        .forEach(ext -> this.definitions.entrySet().stream()
-            .filter(definition -> this.extend(definition.getKey(), ext))
-            .forEach(definition ->
-                collection.put(definition.getKey(), definition.getValue())
-            )
-        );
+        .filter(new Predicate<Extension>() {
+            @Override
+            public boolean test(Extension ext) {
+                return ext.getRootName().equals(root);
+            }
+        })
+        .forEach(new Consumer<Extension>() {
+            @Override
+            public void accept(Extension ext) {
+                Container.this.definitions.entrySet().stream()
+                .filter(new Predicate<Map.Entry<String, Object>>() {
+                @Override
+                public boolean test(Map.Entry<String, Object> definition) {
+                    return Container.this.extend(definition.getKey(), ext);
+                }
+            }).forEach(new Consumer<Map.Entry<String, Object>>() {
+                    @Override
+                    public void accept(Map.Entry<String, Object> definition) {
+                        collection.put(definition.getKey(), definition.getValue());
+                    }
+                });
+            }
+        });
 
         return collection;
     }
@@ -65,11 +84,19 @@ public class Container
 
         this.loadResources();
 
-        this.register.getResolvers().forEach(resolver -> {
-            resolver.setExtensions(this.register.getExtensions());
-            resolver.resolve();
+        this.register.getResolvers().forEach(new Consumer<ContainerResolver>() {
+            @Override
+            public void accept(ContainerResolver resolver) {
+                resolver.setExtensions(Container.this.register.getExtensions());
+                resolver.resolve();
+            }
         });
-        this.register.getExtensions().forEach(Extension::mapping);
+        this.register.getExtensions().forEach(new Consumer<Extension>() {
+            @Override
+            public void accept(Extension extension) {
+                extension.mapping();
+            }
+        });
 
         this.__compiled__ = true;
     }
@@ -84,7 +111,17 @@ public class Container
         boolean valid[] = {false};
 
         for (Map.Entry<String, List<String>> ext : this.extensionMap.entrySet()) {
-            ext.getValue().stream().filter(definition::equals).forEach(def -> valid[0] = true);
+            ext.getValue().stream().filter(new Predicate<String>() {
+                @Override
+                public boolean test(String s) {
+                    return definition.equals(s);
+                }
+            }).forEach(new Consumer<String>() {
+                @Override
+                public void accept(String def) {
+                    valid[0] = true;
+                }
+            });
             if (valid[0]) return valid[0];
         }
 

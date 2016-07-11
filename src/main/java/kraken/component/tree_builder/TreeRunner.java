@@ -1,9 +1,12 @@
 package kraken.component.tree_builder;
 
-import kraken.component.tree_builder.nodes.*;
+import kraken.component.tree_builder.nodes.Node;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public class TreeRunner
@@ -41,14 +44,29 @@ public class TreeRunner
 
     private LinkedHashMap<String, ?> mergeMaps(ArrayList<LinkedHashMap> map) {
         LinkedHashMap<String, ?> merged = new LinkedHashMap<>();
-        map.forEach(merged::putAll);
+        map.forEach(new Consumer<LinkedHashMap>() {
+            @Override
+            public void accept(LinkedHashMap linkedHashMap) {
+                merged.putAll(linkedHashMap);
+            }
+        });
 
         return merged;
     }
 
     private ArrayList<LinkedHashMap> linearizeValues(ArrayList<Node> nodes) {
         return nodes.stream()
-            .map(node -> (LinkedHashMap) node.getValue())
-            .collect(Collectors.toCollection(ArrayList::new));
+            .map(new Function<Node, LinkedHashMap>() {
+                @Override
+                public LinkedHashMap apply(Node node) {
+                    return (LinkedHashMap) node.getValue();
+                }
+            })
+            .collect(Collectors.toCollection(new Supplier<ArrayList<LinkedHashMap>>() {
+                @Override
+                public ArrayList<LinkedHashMap> get() {
+                    return new ArrayList<>();
+                }
+            }));
     }
 }
