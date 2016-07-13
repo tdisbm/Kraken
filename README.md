@@ -1,7 +1,7 @@
 # Kraken
 
 # Description:
-Raspberry Pi GPIO controll environment, task runner with JavaFX embedded application runner that make simple add/remove a sensor, run sensor read task and many other things
+Raspberry Pi GPIO controll environment and task runner that make simple add/remove a sensor, run sensor read task and many other things
 
 # Usage:
 ```java
