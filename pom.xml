@@ -41,38 +41,18 @@
     <build>
         <plugins>
             <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-enforcer-plugin</artifactId>-->
-                <!--<version>1.4</version>-->
+                <!--<groupId>net.orfjackal.retrolambda</groupId>-->
+                <!--<artifactId>retrolambda-maven-plugin</artifactId>-->
+                <!--<version>2.3.0</version>-->
                 <!--<executions>-->
                     <!--<execution>-->
-                        <!--<id>enforce-java</id>-->
                         <!--<goals>-->
-                            <!--<goal>enforce</goal>-->
+                            <!--<goal>process-main</goal>-->
+                            <!--<goal>process-test</goal>-->
                         <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<rules>-->
-                                <!--<requireJavaVersion>-->
-                                    <!--<version>1.8.0</version>-->
-                                <!--</requireJavaVersion>-->
-                            <!--</rules>-->
-                        <!--</configuration>-->
                     <!--</execution>-->
                 <!--</executions>-->
             <!--</plugin>-->
-            <plugin>
-                <groupId>net.orfjackal.retrolambda</groupId>
-                <artifactId>retrolambda-maven-plugin</artifactId>
-                <version>2.3.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>process-main</goal>
-                            <goal>process-test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>${maven-assembly-plugin.version}</version>
