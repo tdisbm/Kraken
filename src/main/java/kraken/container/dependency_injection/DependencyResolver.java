@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import static kraken.component.util.instance.InstanceLoader.getClasses;
 import static kraken.component.util.instance.InstanceLoader.newInstance;
@@ -44,26 +42,31 @@ public class DependencyResolver extends ContainerResolver {
             container
         ).topologicalOrder();
 
-        ArrayList<String> argumentList;
+        ArrayList<String> argumentList = new ArrayList<>();
         ArrayList<Object> arguments = new ArrayList<>();
+
+        String argument;
 
         String[] instanceList = classes.keySet().toArray(new String[0]);
         Object instance;
 
         for (int i : loadStack) {
-            argumentList = (ArrayList<String>) definitionMap.get(instanceList[i]);
+            if (definitionMap.get(instanceList[i]) instanceof ArrayList) {
+                argumentList = (ArrayList<String>) definitionMap.get(instanceList[i]);
+            }
 
-            if (argumentList != null)
-            arguments.addAll(argumentList.stream().map(new Function<String, Object>() {
-                @Override
-                public Object apply(String argument) {
-                    return null != loaded.get(argument)
-                    ? loaded.get(argument)
-                    : container.hasExtension(argument)
-                    ? container.get(argument)
-                    : argument;
+            if (argumentList.size() > 0) {
+                for (String value : argumentList) {
+                    argument = value;
+
+                    arguments.add(null != loaded.get(argument)
+                        ? loaded.get(argument)
+                        : container.hasExtension(argument)
+                        ? container.get(argument)
+                        : argument
+                    );
                 }
-            }).collect(Collectors.toList()));
+            }
 
             if (null == (instance = newInstance(classes.get(instanceList[i]), arguments))) {
                 throw new Error("Can't create instance for definition " + instanceList[i]);

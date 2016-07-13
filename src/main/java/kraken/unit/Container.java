@@ -9,8 +9,6 @@ import kraken.container.ContainerResolver;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 
 public class Container
@@ -45,30 +43,19 @@ public class Container
     final public LinkedHashMap<String, Object> getByExtensionRoot(String root) {
         LinkedHashMap<String, Object> collection = new LinkedHashMap<>();
 
-        this.register.getExtensions().stream()
-        .filter(new Predicate<Extension>() {
-            @Override
-            public boolean test(Extension ext) {
-                return ext.getRootName().equals(root);
+        for (Extension ext : this.register.getExtensions()) {
+            if (!ext.getRootName().equals(root)) {
+                continue;
             }
-        })
-        .forEach(new Consumer<Extension>() {
-            @Override
-            public void accept(Extension ext) {
-                Container.this.definitions.entrySet().stream()
-                .filter(new Predicate<Map.Entry<String, Object>>() {
-                @Override
-                public boolean test(Map.Entry<String, Object> definition) {
-                    return Container.this.extend(definition.getKey(), ext);
+
+            for (Map.Entry<String, Object> definition : this.definitions.entrySet()) {
+                if (!this.extend(definition.getKey(), ext)) {
+                    continue;
                 }
-            }).forEach(new Consumer<Map.Entry<String, Object>>() {
-                    @Override
-                    public void accept(Map.Entry<String, Object> definition) {
-                        collection.put(definition.getKey(), definition.getValue());
-                    }
-                });
+
+                collection.put(definition.getKey(), definition.getValue());
             }
-        });
+        }
 
         return collection;
     }
@@ -84,19 +71,14 @@ public class Container
 
         this.loadResources();
 
-        this.register.getResolvers().forEach(new Consumer<ContainerResolver>() {
-            @Override
-            public void accept(ContainerResolver resolver) {
-                resolver.setExtensions(Container.this.register.getExtensions());
-                resolver.resolve();
-            }
-        });
-        this.register.getExtensions().forEach(new Consumer<Extension>() {
-            @Override
-            public void accept(Extension extension) {
-                extension.mapping();
-            }
-        });
+        for (ContainerResolver resolver : this.register.getResolvers()) {
+            resolver.setExtensions(Container.this.register.getExtensions());
+            resolver.resolve();
+        }
+
+        for (Extension e : this.register.getExtensions()) {
+            e.mapping();
+        }
 
         this.__compiled__ = true;
     }
@@ -108,24 +90,15 @@ public class Container
     }
 
     final public boolean hasExtension(String definition) {
-        boolean valid[] = {false};
-
         for (Map.Entry<String, List<String>> ext : this.extensionMap.entrySet()) {
-            ext.getValue().stream().filter(new Predicate<String>() {
-                @Override
-                public boolean test(String s) {
-                    return definition.equals(s);
+            for (String s : ext.getValue()) {
+                if (definition.equals(s)) {
+                    return true;
                 }
-            }).forEach(new Consumer<String>() {
-                @Override
-                public void accept(String def) {
-                    valid[0] = true;
-                }
-            });
-            if (valid[0]) return valid[0];
+            }
         }
 
-        return valid[0];
+        return false;
     }
 
     private boolean extend(String definition, Extension ext) {
@@ -161,7 +134,10 @@ public class Container
                         definitions.get(definition)
                     );
 
-                    this.extensionMap.putIfAbsent(ext.getRootName(), new LinkedList<>());
+                    if (this.extensionMap.get(ext.getRootName()) == null) {
+                        this.extensionMap.put(ext.getRootName(), new LinkedList<String>());
+                    }
+
                     this.extensionMap.get(ext.getRootName()).add(ext.wrap(definition));
                     this.definitions.put(ext.wrap(definition), definitions.get(definition));
                 }
