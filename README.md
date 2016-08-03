@@ -27,11 +27,10 @@ sensors:
 
 or customized, user defined extension. (**about this later**)
 
-By default are available 4 extensions:
+By default available extensions:
  * sensors - Raspberry Pi GPIO attached sensor
  * parameters - any parammeters
  * tasks - schelude threads runner
- * scene - javafx application runner
 
 # Maven Dependency
 ```xml
