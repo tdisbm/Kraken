@@ -1,15 +1,18 @@
 package kraken;
 
-import kraken.container.dependency_injection.*;
 import kraken.container.ContainerResolver;
+import kraken.container.dependency_injection.DependencyResolver;
 import kraken.unit.Container;
 import kraken.unit.Extension;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.LinkedList;
 
-public class AppRegister {
-    private LinkedList<File> resources;
+public class Register {
+    private LinkedList<InputStream> resources;
 
     private LinkedList<Extension> extensions;
 
@@ -17,7 +20,7 @@ public class AppRegister {
 
     private Container container;
 
-    public AppRegister() {
+    Register() {
         this.container = new Container();
         this.resources = new LinkedList<>();
         this.extensions = new LinkedList<>();
@@ -26,22 +29,34 @@ public class AppRegister {
         this.registerResolvers();
     }
 
-    final public AppRegister registerResource(File resource) {
-        if (resource.exists()) {
-            this.resources.add(resource);
-        }
+    final Register registerResource(Object resource) {
+        InputStream temp = null;
+
+        try {
+            if (resource instanceof File) {
+                temp = new FileInputStream((File) resource);
+            }
+
+            if (resource instanceof InputStream) {
+                temp = (InputStream) resource;
+            }
+
+            if (temp != null) {
+                this.resources.add(temp);
+            }
+        } catch (FileNotFoundException ignored) {}
 
         return this;
     }
 
-    final public AppRegister registerResolver(ContainerResolver resolver) {
+    final Register registerResolver(ContainerResolver resolver) {
         resolver.setContainer(this.container);
         this.resolvers.add(resolver);
 
         return this;
     }
 
-    final public AppRegister registerExtension(Extension extension) {
+    final Register registerExtension(Extension extension) {
         extension.setContainer(this.container);
         this.extensions.add(extension);
 
@@ -56,11 +71,11 @@ public class AppRegister {
         return this.resolvers;
     }
 
-    final public LinkedList<File> getResources() {
+    final public LinkedList<InputStream> getResources() {
         return this.resources;
     }
 
-    final public  Container getContainer() {
+    final Container getContainer() {
         return this.container;
     }
 

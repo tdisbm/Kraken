@@ -1,13 +1,14 @@
 package kraken.unit;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import kraken.AppRegister;
+import kraken.Register;
 import kraken.container.ContainerResolver;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 
@@ -19,10 +20,13 @@ public class Container
 
     private ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
-    private AppRegister register;
+    private Register register;
 
     private boolean __compiled__ = false;
 
+    public Container() {
+        mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
+    }
 
     final public Container set(String resource, Object definition) {
         if (this.__compiled__) {
@@ -83,7 +87,7 @@ public class Container
         this.__compiled__ = true;
     }
 
-    final public Container setRegister(AppRegister register) {
+    final public Container setRegister(Register register) {
         this.register = register;
 
         return this;
@@ -116,13 +120,13 @@ public class Container
         JsonNode tree;
         String definition;
 
-        for (File resources : this.register.getResources()) {
-            try {
-                tree = this.mapper.readTree(resources);
-            } catch (IOException ignored) { continue; }
+        for (InputStream resource : this.register.getResources()) {
+            if (null == (tree = this.mapResource(resource))) {
+                continue;
+            }
 
             for (Extension ext : this.register.getExtensions()) {
-                if ((definitions = tree.get(ext.getRootName())) == null) continue;
+                if (null == (definitions = tree.get(ext.getRootName()))) continue;
 
                 fields = definitions.fieldNames();
 
@@ -135,13 +139,21 @@ public class Container
                     );
 
                     if (this.extensionMap.get(ext.getRootName()) == null) {
-                        this.extensionMap.put(ext.getRootName(), new LinkedList<String>());
+                        this.extensionMap.put(ext.getRootName(), new LinkedList<>());
                     }
 
                     this.extensionMap.get(ext.getRootName()).add(ext.wrap(definition));
                     this.definitions.put(ext.wrap(definition), definitions.get(definition));
                 }
             }
+        }
+    }
+
+    private JsonNode mapResource(InputStream resource) {
+        try {
+            return this.mapper.readTree(resource);
+        } catch (IOException e) {
+            return null;
         }
     }
 }

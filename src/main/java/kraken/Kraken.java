@@ -7,9 +7,10 @@ import kraken.extension.task.TaskExtension;
 import kraken.unit.Extension;
 
 import java.io.File;
+import java.io.InputStream;
 
 public class Kraken {
-    private AppRegister register = new AppRegister();
+    private Register register = new Register();
 
     final public Kraken dive() {
         long startTime = System.currentTimeMillis();
@@ -27,16 +28,14 @@ public class Kraken {
     final public Kraken sink(Object o) {
         if (o instanceof ContainerResolver) {
             this.register.registerResolver((ContainerResolver) o);
-            return this;
         }
 
         if (o instanceof Extension) {
             this.register.registerExtension((Extension) o);
-            return this;
         }
 
-        if (o instanceof File) {
-            this.register.registerResource((File) o);
+        if (o instanceof File || o instanceof InputStream || o instanceof String) {
+            this.register.registerResource(o);
         }
 
         return this;
