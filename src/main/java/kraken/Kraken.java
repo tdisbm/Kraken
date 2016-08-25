@@ -13,13 +13,9 @@ public class Kraken {
     private Register register = new Register();
 
     final public Kraken dive() {
-        long startTime = System.currentTimeMillis();
+        this.registerExtensions();
+        this.loadContainer();
 
-        this.registerExtensions()
-            .loadContainer();
-
-        long endTime = System.currentTimeMillis();
-        System.out.printf("[+] kraken.Kraken is running! \n - Compile time: %d ms", endTime - startTime);
         System.gc();
 
         return this;
