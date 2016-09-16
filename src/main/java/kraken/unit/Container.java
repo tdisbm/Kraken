@@ -139,7 +139,7 @@ public class Container
                     );
 
                     if (this.extensionMap.get(ext.getRootName()) == null) {
-                        this.extensionMap.put(ext.getRootName(), new LinkedList<>());
+                        this.extensionMap.put(ext.getRootName(), new LinkedList<String>());
                     }
 
                     this.extensionMap.get(ext.getRootName()).add(ext.wrap(definition));

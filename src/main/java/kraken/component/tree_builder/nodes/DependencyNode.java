@@ -1,7 +1,7 @@
 package kraken.component.tree_builder.nodes;
 
-import com.fasterxml.jackson.databind.node.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.*;
 import kraken.component.tree_builder.chain.SupportChain;
 
 import java.util.ArrayList;
@@ -13,12 +13,14 @@ public class DependencyNode extends Node
         super(name);
     }
 
-    public SupportChain buildSupportChain(SupportChain chain) {
-        return chain.add(ArrayNode.class)
+    public void buildSupportChain(SupportChain chain) {
+        chain
             .add(ObjectNode.class)
-            .add(IntNode.class)
+            .add(StringNode.class)
             .add(DoubleNode.class)
-            .add(StringNode.class);
+            .add(ArrayNode.class)
+            .add(IntNode.class)
+        ;
     }
 
     public Object linearize(Object complex) {

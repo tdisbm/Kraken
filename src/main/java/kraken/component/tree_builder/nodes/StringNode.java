@@ -10,8 +10,10 @@ public class StringNode extends Node
     }
 
     @Override
-    public SupportChain buildSupportChain(SupportChain chain) {
-        return chain.add(String.class).add(TextNode.class);
+    public void buildSupportChain(SupportChain chain) {
+        chain
+            .add(TextNode.class)
+        ;
     }
 
     public Object linearize(Object complex) {

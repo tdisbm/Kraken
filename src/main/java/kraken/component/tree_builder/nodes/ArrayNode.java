@@ -9,8 +9,10 @@ public class ArrayNode extends Node
     }
 
     @Override
-    public SupportChain buildSupportChain(SupportChain chain) {
-        return chain.add(com.fasterxml.jackson.databind.node.ArrayNode.class);
+    public void buildSupportChain(SupportChain chain) {
+        chain
+            .add(com.fasterxml.jackson.databind.node.ArrayNode.class)
+        ;
     }
 
     public Object linearize(Object complex) {

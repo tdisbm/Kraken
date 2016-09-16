@@ -11,8 +11,10 @@ public class InstanceNode extends Node
     }
 
     @Override
-    public SupportChain buildSupportChain(SupportChain chain) {
-        return chain.add(TextNode.class).add(TextNode.class);
+    public void buildSupportChain(SupportChain chain) {
+        chain
+            .add(TextNode.class)
+        ;
     }
 
     public Object linearize(Object complex) {

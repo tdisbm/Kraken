@@ -19,7 +19,7 @@ public abstract class Node
     private SupportChain supportChain = new SupportChain();
 
     Node(String name) {
-        this.supportChain = this.buildSupportChain(this.supportChain);
+        this.buildSupportChain(this.supportChain);
         this.name = name;
     }
 
@@ -89,7 +89,7 @@ public abstract class Node
         return this.supportChain != null && this.supportChain.supports(value);
     }
 
-    public abstract SupportChain buildSupportChain (SupportChain chain);
+    public abstract void buildSupportChain (SupportChain chain);
 
     public abstract Object linearize(Object complex);
 }

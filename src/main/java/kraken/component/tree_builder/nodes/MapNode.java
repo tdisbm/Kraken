@@ -10,8 +10,8 @@ public class MapNode extends Node
     }
 
     @Override
-    public SupportChain buildSupportChain(SupportChain chain) {
-        return chain.add(ObjectNode.class);
+    public void buildSupportChain(SupportChain chain) {
+        chain.add(ObjectNode.class);
     }
 
     public Object linearize(Object complex) {
