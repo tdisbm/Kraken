@@ -25,6 +25,20 @@ sensors:
           - argument2
 ```
 
+Dependency injection example:
+
+```java
+parameters:
+    foo: bar
+
+sensors:
+    DHT22:
+        class: device.sensors.DHT22
+        arguments:
+          - parameters.foo
+}
+```
+
 or customized, user defined extension. (**about this later**)
 
 By default available extensions:
