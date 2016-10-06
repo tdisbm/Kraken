@@ -16,7 +16,7 @@ public static void main(String[] args) {
 ```
 Sink arguments are resources to yml files that can look like this:
 
-```yml
+```yaml
 sensors:
     DHT22:
         class: device.sensors.DHT22
@@ -27,7 +27,7 @@ sensors:
 
 Dependency injection example:
 
-```java
+```yaml
 parameters:
     foo: bar
 
@@ -36,7 +36,6 @@ sensors:
         class: device.sensors.DHT22
         arguments:
           - parameters.foo
-}
 ```
 
 or customized, user defined extension. (**about this later**)
