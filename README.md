@@ -1,7 +1,7 @@
 # Kraken
 
 # Description:
-Raspberry Pi GPIO controll environment and task runner that make simple add/remove a sensor, run sensor read task and many other things
+Raspberry PI Environment controll framework. Fully working dependency injection container are included and some default extensions for Sensors and Tasks
 
 # Usage:
 ```java
