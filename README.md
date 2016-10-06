@@ -19,7 +19,7 @@ Sink arguments are resources to yml files that can look like this:
 ```yaml
 sensors:
     DHT22:
-        class: device.sensors.DHT22 //path to java class
+        class: device.sensors.DHT22 #path to java class
         arguments:
           - argument1
           - argument2
@@ -35,7 +35,7 @@ sensors:
     DHT22:
         class: device.sensors.DHT22
         arguments:
-          - parameters.foo
+          - parameters.foo  #dependency to foo parameter (class device.sensors.DHT22 will be constructed with foo parameter)
 ```
 
 or customized, user defined extension. (**about this later**)
