@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>EgleeyDevice</groupId>
-    <artifactId>EgleeyDevice</artifactId>
+    <groupId>Kraken</groupId>
+    <artifactId>Kraken</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
@@ -20,7 +20,6 @@
         <pi4j-gpio-extenison.version>1.0</pi4j-gpio-extenison.version>
 
         <socket.io-client.version>0.7.0</socket.io-client.version>
-        <org.jetbrains.version>RELEASE</org.jetbrains.version>
         <javafx-maven-plugin.version>8.1.4</javafx-maven-plugin.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,11 +56,6 @@
             <version>${jackson.core.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations-java5</artifactId>
-            <version>${org.jetbrains.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
