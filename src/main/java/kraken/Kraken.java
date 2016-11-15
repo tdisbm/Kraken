@@ -3,6 +3,7 @@ package kraken;
 import kraken.container.ContainerResolver;
 import kraken.extension.parameter.ParameterExtension;
 import kraken.extension.sensor.SensorExtension;
+import kraken.extension.service.ServiceExtension;
 import kraken.extension.task.TaskExtension;
 import kraken.unit.Extension;
 
@@ -13,7 +14,7 @@ public class Kraken {
     private Register register = new Register();
 
     final public Kraken dive() {
-        this.registerExtensions();
+        this.registerDefaultExtensions();
         this.loadContainer();
 
         System.gc();
@@ -37,11 +38,13 @@ public class Kraken {
         return this;
     }
 
-    private Kraken registerExtensions() {
+    private Kraken registerDefaultExtensions() {
         return this
             .sink(new SensorExtension())
+            .sink(new ServiceExtension())
             .sink(new TaskExtension())
-        .sink(new ParameterExtension());
+            .sink(new ParameterExtension())
+        ;
     }
 
     private Kraken loadContainer() {
