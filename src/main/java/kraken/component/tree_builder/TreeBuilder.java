@@ -2,8 +2,6 @@ package kraken.component.tree_builder;
 
 
 import kraken.component.tree_builder.nodes.*;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 
 public class TreeBuilder
@@ -35,8 +33,6 @@ public class TreeBuilder
         return this;
     }
 
-    @Contract("null -> fail")
-    @NotNull
     final public TreeBuilder addChild(Node node) {
         this.current.addChild(node);
         node.setRoot(this.root)
