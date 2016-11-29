@@ -5,7 +5,7 @@ import kraken.Kraken;
 public abstract class KrakenApp {
     private Kraken kraken = new Kraken();
 
-    public void KrakenApp() {
+    public KrakenApp() {
         this.registerExtensions(this.kraken);
         this.registerResources(this.kraken);
         this.registerResolvers(this.kraken);
