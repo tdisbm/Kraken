@@ -47,7 +47,7 @@ public class Kraken {
         ;
     }
 
-    private Kraken loadContainer() {
+    protected Kraken loadContainer() {
         this.register
             .getContainer()
             .setRegister(this.register)
