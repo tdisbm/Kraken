@@ -16,9 +16,9 @@ public abstract class KrakenApp {
         return this.kraken;
     }
 
-    abstract void registerExtensions(Kraken kraken);
+    protected abstract void registerExtensions(Kraken kraken);
 
-    abstract void registerResources(Kraken kraken);
+    protected abstract void registerResources(Kraken kraken);
 
-    abstract void registerResolvers(Kraken kraken);
+    protected abstract void registerResolvers(Kraken kraken);
 }
