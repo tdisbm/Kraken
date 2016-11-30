@@ -5,6 +5,7 @@ import kraken.extension.parameter.ParameterExtension;
 import kraken.extension.sensor.SensorExtension;
 import kraken.extension.service.ServiceExtension;
 import kraken.extension.task.TaskExtension;
+import kraken.unit.Container;
 import kraken.unit.Extension;
 
 import java.io.File;
@@ -38,7 +39,11 @@ public class Kraken {
         return this;
     }
 
-    private Kraken registerDefaultExtensions() {
+    final public Container getContainer() {
+        return this.register.getContainer();
+    }
+
+    protected Kraken registerDefaultExtensions() {
         return this
             .sink(new SensorExtension())
             .sink(new ServiceExtension())

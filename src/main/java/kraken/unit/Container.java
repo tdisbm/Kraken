@@ -28,20 +28,20 @@ public class Container
         mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
     }
 
-    final public Container set(String resource, Object definition) {
+    final public Container set(String id, Object definition) {
         if (this.__compiled__) {
             System.out.println("Container is already compiled, ca't set any definition");
         }
 
-        if (resource != null && !resource.isEmpty()) {
-            this.definitions.put(resource, definition);
+        if (id != null && !id.isEmpty()) {
+            this.definitions.put(id, definition);
         }
 
         return this;
     }
 
-    final public Object get(String resource) {
-        return this.definitions.get(resource);
+    final public Object get(String id) {
+        return this.definitions.get(id);
     }
 
     final public LinkedHashMap<String, Object> getByExtensionRoot(String root) {
