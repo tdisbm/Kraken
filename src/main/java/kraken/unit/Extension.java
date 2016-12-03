@@ -1,10 +1,14 @@
 package kraken.unit;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import kraken.Kraken;
 import kraken.component.extension.Configurator;
 import kraken.component.tree_builder.TreeBuilder;
+import kraken.container.ContainerResolver;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,6 +35,10 @@ public abstract class Extension
         this.container = container;
 
         return this;
+    }
+
+    final public Container getContainer() {
+        return this.container;
     }
 
     final public TreeBuilder getTreeBuilder() {
@@ -86,4 +94,16 @@ public abstract class Extension
     public abstract void map(Object definition, JsonNode prototype) throws Exception;
 
     public abstract TreeBuilder buildPrototype(TreeBuilder builder);
+
+    public LinkedHashMap<String, Object> registerSystemDefaults(LinkedHashMap<String, Object> defaults) {
+        return defaults;
+    }
+
+    public List<ContainerResolver> registerResolvers(List<ContainerResolver> resolvers) {
+        return resolvers;
+    }
+
+    public List<Object> registerResources(List<Object> resources) {
+        return resources;
+    }
 }

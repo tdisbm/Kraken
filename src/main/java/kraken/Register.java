@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class Register {
     private LinkedList<InputStream> resources;
@@ -60,6 +63,22 @@ public class Register {
         extension.setContainer(this.container);
         this.extensions.add(extension);
 
+        LinkedHashMap<String, Object> systemDefaults = extension.registerSystemDefaults(new LinkedHashMap<>());
+        List<ContainerResolver> resolvers = extension.registerResolvers(new LinkedList<>());
+        List<Object> resources = extension.registerResources(new LinkedList<>());
+
+        for (Object resource: resources) {
+            this.registerResource(resource);
+        }
+
+        for (ContainerResolver resolver: resolvers) {
+            this.registerResolver(resolver);
+        }
+
+        for (Map.Entry def: systemDefaults.entrySet()) {
+            this.container.set("system." + def.getKey(), def.getValue());
+        }
+
         return this;
     }
 
@@ -82,5 +101,4 @@ public class Register {
     private void registerResolvers(){
         this.registerResolver(new DependencyResolver());
     }
-
 }
