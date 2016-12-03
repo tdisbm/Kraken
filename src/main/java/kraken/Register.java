@@ -76,7 +76,7 @@ public class Register {
         }
 
         for (Map.Entry def: systemDefaults.entrySet()) {
-            this.container.set("system." + def.getKey(), def.getValue());
+            this.container.set(extension.getTreeBuilder().getRootName() + "." + def.getKey(), def.getValue());
         }
 
         return this;

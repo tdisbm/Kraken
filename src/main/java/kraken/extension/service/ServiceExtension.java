@@ -20,10 +20,4 @@ public class ServiceExtension extends Extension {
             .addChild(new DependencyNode("arguments"))
         .end();
     }
-
-    public LinkedHashMap<String, Object> registerSystemDefaults(LinkedHashMap<String, Object> defaults) {
-        defaults.put("container", this.getContainer());
-
-        return defaults;
-    }
 }

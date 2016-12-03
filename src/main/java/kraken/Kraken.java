@@ -4,6 +4,7 @@ import kraken.container.ContainerResolver;
 import kraken.extension.parameter.ParameterExtension;
 import kraken.extension.sensor.SensorExtension;
 import kraken.extension.service.ServiceExtension;
+import kraken.extension.system.SystemExtension;
 import kraken.extension.task.TaskExtension;
 import kraken.unit.Container;
 import kraken.unit.Extension;
@@ -49,6 +50,7 @@ public class Kraken {
             .sink(new ServiceExtension())
             .sink(new TaskExtension())
             .sink(new ParameterExtension())
+            .sink(new SystemExtension())
         ;
     }
 
