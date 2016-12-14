@@ -42,7 +42,7 @@ public abstract class Controller {
         return collection;
     }
 
-    public void initialize() {
+    public void init() {
         // to override
     }
 

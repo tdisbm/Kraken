@@ -55,7 +55,7 @@ public class ControllerSwitcher
         }
 
         this.copy(controller, ctr);
-        ctr.initialize();
+        ctr.init();
         this.scenes.putIfAbsent(id, scene);
 
         return scene;
