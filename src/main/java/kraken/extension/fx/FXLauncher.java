@@ -1,4 +1,4 @@
-package kraken.extension.scene;
+package kraken.extension.fx;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

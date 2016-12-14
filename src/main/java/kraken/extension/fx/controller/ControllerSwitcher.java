@@ -1,4 +1,4 @@
-package kraken.extension.scene.controller;
+package kraken.extension.fx.controller;
 
 
 import com.fasterxml.jackson.databind.JsonNode;

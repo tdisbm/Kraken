@@ -1,8 +1,8 @@
-package kraken.extension.scene;
+package kraken.extension.fx;
 
 import kraken.unit.Container;
-import kraken.extension.scene.controller.Controller;
-import kraken.extension.scene.controller.ControllerSwitcher;
+import kraken.extension.fx.controller.Controller;
+import kraken.extension.fx.controller.ControllerSwitcher;
 
 
 class FXBridge {

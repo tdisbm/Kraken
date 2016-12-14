@@ -1,7 +1,8 @@
 import kraken.AppRegister;
 import kraken.extension.parameter.ParameterExtension;
-import kraken.extension.scene.FXExtension;
+import kraken.extension.fx.FXExtension;
 import kraken.extension.sensor.SensorExtension;
+import kraken.extension.service.ServiceExtension;
 import kraken.extension.task.TaskExtension;
 import kraken.unit.Extension;
 import kraken.container.ContainerResolver;
@@ -47,6 +48,7 @@ public class Kraken {
             .sink(new SensorExtension())
             .sink(new TaskExtension())
             .sink(new ParameterExtension())
+            .sink(new ServiceExtension())
         .sink(new FXExtension());
     }
 

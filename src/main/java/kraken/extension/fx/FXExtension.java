@@ -1,4 +1,4 @@
-package kraken.extension.scene;
+package kraken.extension.fx;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import kraken.unit.Container;
@@ -8,7 +8,7 @@ import kraken.component.tree_builder.nodes.ArrayNode;
 import kraken.component.tree_builder.nodes.InstanceNode;
 import kraken.component.tree_builder.nodes.MapNode;
 import kraken.component.tree_builder.nodes.StringNode;
-import kraken.extension.scene.controller.Controller;
+import kraken.extension.fx.controller.Controller;
 
 import java.lang.reflect.Field;
 

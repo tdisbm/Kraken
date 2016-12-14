@@ -1,20 +1,14 @@
-package kraken.extension.scene.controller;
+package kraken.extension.fx.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import javafx.stage.Stage;
 import kraken.unit.Container;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 
-import javafx.fxml.FXML;
-
-
-public abstract class Controller extends VBox implements Initializable {
+public abstract class Controller extends Stage implements Initializable {
     private Container container = new Container();
 
     private ControllerSwitcher switcher = null;
@@ -22,9 +16,6 @@ public abstract class Controller extends VBox implements Initializable {
     private String template = null;
 
     private JsonNode options;
-
-    @FXML
-    private Button switch_controller;
 
 
     final public void setTemplate(String template) {
@@ -62,15 +53,6 @@ public abstract class Controller extends VBox implements Initializable {
         this.options = options;
 
         return this;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        if (switch_controller != null) {
-            switch_controller.setOnAction(event ->
-                this.switchController((Controller) this.get(((Button) event.getTarget()).getId()))
-            );
-        }
     }
 
     final public JsonNode getOptions() {
