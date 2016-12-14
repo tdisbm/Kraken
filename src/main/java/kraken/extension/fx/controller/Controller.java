@@ -1,14 +1,14 @@
 package kraken.extension.fx.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import javafx.stage.Stage;
-import kraken.unit.Container;
 import javafx.fxml.Initializable;
+import kraken.unit.Container;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Controller extends Stage implements Initializable {
+
+public abstract class Controller implements Initializable {
     private Container container = new Container();
 
     private ControllerSwitcher switcher = null;
