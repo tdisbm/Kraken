@@ -45,16 +45,15 @@ public class ControllerSwitcher
         }
 
         FXMLLoader loader = new FXMLLoader(new File(controller.getTemplate()).toURI().toURL());
-
         Controller ctr;
 
-        if (null == (ctr = loader.getController())) {
-            System.out.format("Fatal Error: No controller was specified in scene '%s'", controller.getTemplate());
-            System.exit(1);
-        }
+//        if (null == (ctr = loader.getController())) {
+//            System.out.format("Fatal Error: No controller was specified in scene '%s'", controller.getTemplate());
+//            System.exit(1);
+//        }
 
-        this.copy(controller, ctr);
-        loader.setController(ctr);
+        this.wrap(controller);
+        loader.setController(controller);
 
         Scene scene = new Scene(loader.load());
         this.scenes.putIfAbsent(id, scene);
@@ -62,7 +61,7 @@ public class ControllerSwitcher
         return scene;
     }
 
-    private void copy(Controller environment, Controller fx) {
+    private void wrap(Controller fx) {
         try {
             Field s = fx.getClass().getSuperclass().getDeclaredField("switcher");
             Field c = fx.getClass().getSuperclass().getDeclaredField("container");
@@ -72,9 +71,6 @@ public class ControllerSwitcher
 
             c.setAccessible(true);
             c.set(fx, container);
-
-            fx.setTemplate(environment.getTemplate());
-            fx.setOptions(environment.getOptions());
         } catch (NoSuchFieldException | IllegalAccessException ignored) {}
     }
 
