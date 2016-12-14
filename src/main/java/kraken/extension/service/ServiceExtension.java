@@ -12,7 +12,7 @@ public class ServiceExtension extends Extension {
 
     @Override
     public TreeBuilder buildPrototype(TreeBuilder builder) {
-        return builder.setRoot("sensors")
+        return builder.setRoot("services")
             .addChild(new InstanceNode("class"))
             .addChild(new DependencyNode("arguments"))
         .end();
