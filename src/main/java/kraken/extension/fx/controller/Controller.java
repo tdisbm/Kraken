@@ -1,15 +1,13 @@
 package kraken.extension.fx.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import javafx.fxml.Initializable;
-import javafx.scene.layout.VBox;
 import kraken.unit.Container;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public abstract class Controller extends VBox implements Initializable {
+public abstract class Controller {
     private Container container = new Container();
 
     private ControllerSwitcher switcher = null;
@@ -42,6 +40,10 @@ public abstract class Controller extends VBox implements Initializable {
         }
 
         return collection;
+    }
+
+    public void initialize() {
+        // to override
     }
 
     final public void switchController(Controller controller) {
