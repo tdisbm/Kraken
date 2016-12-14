@@ -1,6 +1,8 @@
 package kraken.extension.fx.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import kraken.unit.Container;
 
 import java.util.HashMap;
@@ -15,6 +17,10 @@ public abstract class Controller {
     private String template = null;
 
     private JsonNode options;
+
+    private Stage stage;
+
+    private Scene scene;
 
 
     final public void setTemplate(String template) {
@@ -58,11 +64,30 @@ public abstract class Controller {
         return this;
     }
 
+    final public Controller setStage(Stage stage) {
+        this.stage = stage;
+        return  this;
+    }
+
     final public JsonNode getOptions() {
         return this.options;
     }
 
     final String getTemplate() {
         return this.template;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
+
+    public Controller setScene(Scene scene) {
+        this.scene = scene;
+
+        return this;
     }
 }
