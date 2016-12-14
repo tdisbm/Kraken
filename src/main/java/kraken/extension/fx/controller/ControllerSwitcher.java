@@ -46,7 +46,6 @@ public class ControllerSwitcher
 
         FXMLLoader loader = new FXMLLoader(new File(controller.getTemplate()).toURI().toURL());
 
-        Scene scene = new Scene(loader.load());
         Controller ctr;
 
         if (null == (ctr = loader.getController())) {
@@ -55,6 +54,9 @@ public class ControllerSwitcher
         }
 
         this.copy(controller, ctr);
+        loader.setController(ctr);
+
+        Scene scene = new Scene(loader.load());
         this.scenes.putIfAbsent(id, scene);
 
         return scene;
