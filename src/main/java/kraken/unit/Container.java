@@ -39,15 +39,15 @@ public class Container
         return (T) this.definitions.get(resource);
     }
 
-    final public LinkedHashMap<String, Object> getByExtensionRoot(String root) {
-        LinkedHashMap<String, Object> collection = new LinkedHashMap<>();
+    final public <T> LinkedHashMap<String, T> getByExtensionRoot(String root) {
+        LinkedHashMap<String, T> collection = new LinkedHashMap<>();
 
         this.register.getExtensions().stream()
         .filter(ext -> ext.getRootName().equals(root))
         .forEach(ext -> this.definitions.entrySet().stream()
             .filter(definition -> this.extend(definition.getKey(), ext))
             .forEach(definition ->
-                collection.put(definition.getKey(), definition.getValue())
+                collection.put(definition.getKey(), (T) definition.getValue())
             )
         );
 

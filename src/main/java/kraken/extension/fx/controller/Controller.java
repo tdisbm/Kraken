@@ -6,6 +6,7 @@ import javafx.stage.Stage;
 import kraken.unit.Container;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 
@@ -27,17 +28,17 @@ public abstract class Controller {
         this.template = template;
     }
 
-    final public Object get(String definition) {
+    final public <T> T get(String definition) {
         return this.container.get(definition);
     }
 
-    final public Object get(String ext, String ...definitions) {
+    final public <T> HashMap<String, T> get(String ext, String ...definitions) {
         if (definitions == null) {
             return this.container.getByExtensionRoot(ext);
         }
 
-        Map<String, Object> collection = new HashMap<>();
-        Object current;
+        HashMap<String, T> collection = new HashMap<>();
+        T current;
 
         for (String definition : definitions) {
             if ((current = this.container.get(ext + "." + definition)) != null) {
