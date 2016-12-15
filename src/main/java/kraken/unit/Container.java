@@ -35,8 +35,8 @@ public class Container
         return this;
     }
 
-    final public Object get(String resource) {
-        return this.definitions.get(resource);
+    final public <T> T get(String resource) {
+        return (T) this.definitions.get(resource);
     }
 
     final public LinkedHashMap<String, Object> getByExtensionRoot(String root) {
