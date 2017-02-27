@@ -62,7 +62,7 @@ class DependencyTreeBuilder
     }
 
     private void linkReferences(Node node, Container container) {
-        LinkedHashMap<String, Object> definitions = container.getByExtensionRoot(node.getRoot().getName());
+        LinkedHashMap<String, Object> definitions = container.getRawByExtensionRoot(node.getRoot().getName());
         LinkedHashMap<String, Object> result = new LinkedHashMap<>();
         JsonNode current;
 
@@ -74,7 +74,7 @@ class DependencyTreeBuilder
             }
 
             if (node.supports(current)) {
-                result.put(def.getKey(), node.linearize(current));
+                result.put(def.getKey(), node.simplify(current));
             }
         }
 

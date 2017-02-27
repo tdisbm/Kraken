@@ -16,7 +16,7 @@ public class StringNode extends Node
         ;
     }
 
-    public Object linearize(Object complex) {
+    public Object simplify(Object complex) {
         return complex;
     }
 }

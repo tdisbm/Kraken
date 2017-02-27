@@ -13,6 +13,13 @@ public class TreeRunner
         this.builder = builder;
     }
 
+    final public boolean hasNode(Class<?> clazz) {
+        ArrayList<Node> result;
+        result = findByClass(clazz, null);
+
+        return result.size() > 0;
+    }
+
     final public ArrayList<Node> findByClass(Class<?> clazz, Node from) {
         ArrayList<Node> list = new ArrayList<>();
         Node current = from == null ? this.builder.getRoot() : from;

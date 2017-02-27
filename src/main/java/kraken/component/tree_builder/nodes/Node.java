@@ -91,5 +91,5 @@ public abstract class Node
 
     public abstract void buildSupportChain (SupportChain chain);
 
-    public abstract Object linearize(Object complex);
+    public abstract Object simplify(Object complex);
 }

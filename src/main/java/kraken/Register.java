@@ -2,6 +2,7 @@ package kraken;
 
 import kraken.container.ContainerResolver;
 import kraken.container.dependency_injection.DependencyResolver;
+import kraken.container.method_call.MethodCallResolver;
 import kraken.unit.Container;
 import kraken.unit.Extension;
 
@@ -24,7 +25,7 @@ public class Register {
     private Container container;
 
     Register() {
-        this.container = new Container();
+        this.container = Container.getInstance();
         this.resources = new LinkedList<>();
         this.extensions = new LinkedList<>();
         this.resolvers = new LinkedList<>();
@@ -99,6 +100,9 @@ public class Register {
     }
 
     private void registerResolvers(){
-        this.registerResolver(new DependencyResolver());
+        this
+        .registerResolver(new DependencyResolver())
+        .registerResolver(new MethodCallResolver())
+        ;
     }
 }

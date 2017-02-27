@@ -41,7 +41,7 @@ class DependencyMatrix
 
         for (Map.Entry<String, ?> definition : definitionMap.entrySet()) {
             for (String reference : (ArrayList<String>) definition.getValue()) {
-                if (!container.has(reference) && container.hasExtension(reference)) {
+                if (!container.hasRaw(reference) && container.hasExtension(reference)) {
                     System.out.format(
                         "Fatal error: '%s' has dependency to non existent definition '%s'",
                         definition.getKey(),

@@ -23,7 +23,7 @@ public class DependencyNode extends Node
         ;
     }
 
-    public Object linearize(Object complex) {
+    public Object simplify(Object complex) {
         ArrayList<Object> result = new ArrayList<>();
 
         if (complex instanceof ArrayNode) {

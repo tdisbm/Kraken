@@ -14,7 +14,7 @@ public class MapNode extends Node
         chain.add(ObjectNode.class);
     }
 
-    public Object linearize(Object complex) {
+    public Object simplify(Object complex) {
         return complex;
     }
 }

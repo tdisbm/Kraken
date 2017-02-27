@@ -14,18 +14,31 @@ import java.util.*;
 
 public class Container
 {
-    private Map<String, Object> definitions = new LinkedHashMap<>();
+    private Map<String, List<String>> extensionMap;
+    private Map<String, Object> rawDefinitions;
+    private Map<String, Object> definitions;
 
-    private Map<String, List<String>> extensionMap = new LinkedHashMap<>();
-
-    private ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-
+    private ObjectMapper mapper;
     private Register register;
 
     private boolean __compiled__ = false;
+    private static Container instance;
 
-    public Container() {
+    private Container() {
+        rawDefinitions = new LinkedHashMap<>();
+        extensionMap = new LinkedHashMap<>();
+        definitions = new LinkedHashMap<>();
+        mapper = new ObjectMapper(new YAMLFactory());
+
         mapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
+    }
+
+    public static Container getInstance() {
+        if (instance == null) {
+            instance = new Container();
+        }
+
+        return instance;
     }
 
     final public Container set(String id, Object definition) {
@@ -40,11 +53,19 @@ public class Container
         return this;
     }
 
-    final public Object get(String id) {
-        return this.definitions.get(id);
+    final public <T> T get(String id) {
+        return (T) this.definitions.get(id);
     }
 
-    final public LinkedHashMap<String, Object> getByExtensionRoot(String root) {
+    final public <T> T getRaw(String id) {
+        return __compiled__ ? null : (T) rawDefinitions.get(id);
+    }
+
+    final public Map<String, Object> getRaw() {
+        return __compiled__ ? null : rawDefinitions;
+    }
+
+    final public LinkedHashMap<String, Object> getRawByExtensionRoot(String root) {
         LinkedHashMap<String, Object> collection = new LinkedHashMap<>();
 
         for (Extension ext : this.register.getExtensions()) {
@@ -52,7 +73,7 @@ public class Container
                 continue;
             }
 
-            for (Map.Entry<String, Object> definition : this.definitions.entrySet()) {
+            for (Map.Entry<String, Object> definition : this.rawDefinitions.entrySet()) {
                 if (!this.extend(definition.getKey(), ext)) {
                     continue;
                 }
@@ -64,8 +85,12 @@ public class Container
         return collection;
     }
 
-    final public boolean has(String resource) {
-        return !(this.definitions.get(resource) == null);
+    final public boolean has(String id) {
+        return !(this.definitions.get(id) == null);
+    }
+
+    final public boolean hasRaw(String id) {
+        return !(this.rawDefinitions.get(id) == null);
     }
 
     final public void compile() {
@@ -116,40 +141,36 @@ public class Container
 
     private void loadResources() {
         Iterator<String> fields;
-        JsonNode definitions;
+        JsonNode raw;
         JsonNode tree;
         String definition;
 
         for (InputStream resource : this.register.getResources()) {
-            if (null == (tree = this.mapResource(resource))) {
+            if (null == (tree = this.loadResource(resource))) {
                 continue;
             }
 
             for (Extension ext : this.register.getExtensions()) {
-                if (null == (definitions = tree.get(ext.getRootName()))) continue;
+                if (null == (raw = tree.get(ext.getRootName()))) continue;
 
-                fields = definitions.fieldNames();
+                fields = raw.fieldNames();
 
                 while (fields.hasNext()) {
                     definition = fields.next();
-
-                    ext.getConfigurator().set(
-                        ext.wrap(definition),
-                        definitions.get(definition)
-                    );
+                    ext.getConfigurator().set(ext.wrap(definition), raw.get(definition));
 
                     if (this.extensionMap.get(ext.getRootName()) == null) {
-                        this.extensionMap.put(ext.getRootName(), new LinkedList<String>());
+                        this.extensionMap.put(ext.getRootName(), new LinkedList<>());
                     }
 
                     this.extensionMap.get(ext.getRootName()).add(ext.wrap(definition));
-                    this.definitions.put(ext.wrap(definition), definitions.get(definition));
+                    this.rawDefinitions.put(ext.wrap(definition), raw.get(definition));
                 }
             }
         }
     }
 
-    private JsonNode mapResource(InputStream resource) {
+    private JsonNode loadResource(InputStream resource) {
         try {
             return this.mapper.readTree(resource);
         } catch (IOException e) {

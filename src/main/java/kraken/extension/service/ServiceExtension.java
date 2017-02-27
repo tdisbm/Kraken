@@ -4,9 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import kraken.component.tree_builder.TreeBuilder;
 import kraken.component.tree_builder.nodes.DependencyNode;
 import kraken.component.tree_builder.nodes.InstanceNode;
+import kraken.component.tree_builder.nodes.MethodInvokeNode;
 import kraken.unit.Extension;
-
-import java.util.LinkedHashMap;
 
 public class ServiceExtension extends Extension {
     @java.lang.Override
@@ -18,6 +17,7 @@ public class ServiceExtension extends Extension {
             .setRoot("services")
             .addChild(new InstanceNode("class"))
             .addChild(new DependencyNode("arguments"))
+            .addChild(new MethodInvokeNode("calls"))
         .end();
     }
 }
