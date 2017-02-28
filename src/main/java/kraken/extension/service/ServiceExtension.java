@@ -17,7 +17,7 @@ public class ServiceExtension extends Extension {
             .setRoot("services")
             .addChild(new InstanceNode("class"))
             .addChild(new DependencyNode("arguments"))
-            .addChild(new MethodInvokeNode("calls"))
+            .addChild(new MethodInvokeNode("invoke"))
         .end();
     }
 }

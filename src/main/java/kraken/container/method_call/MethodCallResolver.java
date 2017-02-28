@@ -18,9 +18,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MethodCallResolver extends ContainerResolver {
+    public static final int INVOKE_RECORD_METHOD_NAME = 0;
+    public static final int INVOKE_RECORD_METHOD_ARGS = 1;
+
     @Override
     public void resolve() {
-        Container container = getContainer();
         Map<String, Map<String, Object>> definitionMap = findRawDefinitions();
         Map<String, ArrayList<Node>> callNodes = findMethodCallNodes();
 
@@ -93,11 +95,11 @@ public class MethodCallResolver extends ContainerResolver {
                 while (i.hasNext()) {
                     invokeRecord = (ArrayNode) i.next();
                     args.clear();
-                    if (invokeRecord.get(0) instanceof TextNode) {
-                        methodName = invokeRecord.get(0).asText();
+                    if (invokeRecord.get(INVOKE_RECORD_METHOD_NAME) instanceof TextNode) {
+                        methodName = invokeRecord.get(INVOKE_RECORD_METHOD_NAME).asText();
 
-                        if (invokeRecord.get(1) != null) {
-                            j = invokeRecord.get(1).iterator();
+                        if (invokeRecord.get(INVOKE_RECORD_METHOD_ARGS) != null) {
+                            j = invokeRecord.get(INVOKE_RECORD_METHOD_ARGS).iterator();
                             while(j.hasNext()) {
                                 rawArg = (ValueNode) j.next();
                                 args.add(null != container.get(rawArg.asText())
@@ -107,7 +109,15 @@ public class MethodCallResolver extends ContainerResolver {
                             }
                         }
 
-                        MethodInvoker.invoke(instance, methodName, args);
+                        try {
+                            MethodInvoker.invoke(instance, methodName, args);
+                        } catch (NoSuchMethodException e) {
+                            System.out.println(String.format("Fatal error: Method '%s' does't exist in '%s'",
+                                methodName,
+                                instance.getClass().getName()
+                            ));
+                            System.exit(0);
+                        }
                     }
                 }
             }

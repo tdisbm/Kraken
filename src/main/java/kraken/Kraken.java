@@ -15,6 +15,30 @@ import java.io.InputStream;
 public class Kraken {
     private Register register = new Register();
 
+    private static Kraken instance;
+
+    private Kraken() {}
+
+    public static Kraken getInstance() {
+        if (instance == null) {
+            instance = new Kraken();
+        }
+
+        return instance;
+    }
+
+//    public static Kraken hardReset() {
+//        return instance = new Kraken();
+//    }
+//
+//    public static Kraken softReset() {
+//        Register reg = instance.register;
+//        instance = new Kraken();
+//        instance.register = reg;
+//
+//        return instance;
+//    }
+
     final public Kraken dive() {
         this.registerDefaultExtensions();
         this.loadContainer();

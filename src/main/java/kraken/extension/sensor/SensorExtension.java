@@ -19,6 +19,7 @@ public class SensorExtension extends Extension
         return treeBuilder.setRoot("sensors")
             .addChild(new InstanceNode("class"))
             .addChild(new DependencyNode("arguments"))
+            .addChild(new MethodInvokeNode("invoke"))
         .end();
     }
 }

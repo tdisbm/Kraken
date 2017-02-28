@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import kraken.component.tree_builder.TreeBuilder;
 import kraken.component.tree_builder.nodes.DependencyNode;
 import kraken.component.tree_builder.nodes.InstanceNode;
+import kraken.component.tree_builder.nodes.MethodInvokeNode;
 import kraken.component.tree_builder.nodes.StringNode;
 import kraken.unit.Extension;
 
@@ -27,7 +28,7 @@ public class TaskExtension extends Extension
         task.setRate(prototype.get("rate").intValue());
 
         if (!runSafeThreads(task)) {
-            System.out.println("Warning: Task '" + definition.getClass().getName() + "' is not running");
+            System.out.println("Warning: Task '" + definition.getClass().getName() + "' is not running!");
         }
     }
 
@@ -36,6 +37,7 @@ public class TaskExtension extends Extension
             .addChild(new InstanceNode("class"))
             .addChild(new StringNode("rate"))
             .addChild(new DependencyNode("arguments"))
+            .addChild(new MethodInvokeNode("invoke"))
         .end();
     }
 

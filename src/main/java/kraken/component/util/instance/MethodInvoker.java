@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MethodInvoker {
-    public static <T> T invoke(Object object, String methodName, ArrayList<?> arguments) {
+    public static <T> T invoke(Object object, String methodName, ArrayList<?> arguments) throws NoSuchMethodException {
         Class[] classes = new Class[arguments.size()];
         Object[] args = new Object[arguments.size()];
 
@@ -37,15 +37,17 @@ public class MethodInvoker {
             }
         }
 
-        if (method != null) {
-            try {
-                return (T) (arguments.size() == 0
-                    ? method.invoke(object)
-                    : method.invoke(object, args))
-                ;
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+        if (method == null) {
+            throw new NoSuchMethodException();
+        }
+
+        try {
+            method.setAccessible(true);
+            return (T) (arguments.size() == 0
+                ? method.invoke(object)
+                : method.invoke(object, args))
+            ;
+        } catch (InvocationTargetException | IllegalAccessException ignored) {
         }
 
         return null;
