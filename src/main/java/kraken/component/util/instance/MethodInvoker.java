@@ -1,55 +1,36 @@
 package kraken.component.util.instance;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class MethodInvoker {
     public static <T> T invoke(Object object, String methodName, ArrayList<?> arguments) throws NoSuchMethodException {
-        Class[] classes = new Class[arguments.size()];
-        Object[] args = new Object[arguments.size()];
+        boolean methodNotFound = true;
+        boolean withoutArgs = arguments == null || arguments.size() <= 0;
 
-        for (int i = 0; i < classes.length; i++) {
-            classes[i] = arguments.get(i).getClass();
-            args[i] = arguments.get(i);
-        }
+        Class clazz = object.getClass();
+        Object result = null;
 
-        boolean foundOrNotExist = false;
-        Class<?> tempClass = object.getClass();
-        Method method = null;
-
-        while(!foundOrNotExist) {
-            try {
-                if (tempClass == null) {
-                    foundOrNotExist = true;
+        Method[] methods = clazz.getMethods();
+        for (Method method : methods) {
+            if (method.getName().equals(methodName)) {
+                method.setAccessible(true);
+                try {
+                    result = withoutArgs
+                        ? method.invoke(object)
+                        : method.invoke(object, arguments.toArray());
+                    methodNotFound = false;
                     break;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                if (arguments.size() == 0) {
-                    method = tempClass.getDeclaredMethod(methodName);
-                } else {
-                    method = tempClass.getDeclaredMethod(methodName, classes);
-                }
-
-                foundOrNotExist = true;
-            } catch (NoSuchMethodException e) {
-                tempClass = tempClass.getSuperclass();
             }
         }
 
-        if (method == null) {
+        if (methodNotFound) {
             throw new NoSuchMethodException();
         }
 
-        try {
-            method.setAccessible(true);
-            return (T) (arguments.size() == 0
-                ? method.invoke(object)
-                : method.invoke(object, args))
-            ;
-        } catch (InvocationTargetException | IllegalAccessException ignored) {
-        }
-
-        return null;
+        return (T) result;
     }
 }
