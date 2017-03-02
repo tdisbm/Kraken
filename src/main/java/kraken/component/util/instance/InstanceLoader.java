@@ -1,5 +1,6 @@
 package kraken.component.util.instance;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,26 +8,30 @@ import java.util.Map;
 public class InstanceLoader {
 
     public static Object newInstance(Class<?> clazz, ArrayList<?> arguments) {
-        Class[] classes = new Class[arguments.size()];
+        boolean withoutArgs = arguments == null || arguments.size() == 0;
+        Object instance = null;
 
-        for (int i = 0; i < classes.length; i++) {
-            classes[i] = arguments.get(i).getClass();
-        }
-
-        try {
-            return clazz.getConstructor(classes).newInstance(arguments.toArray());
-        } catch (Exception e) {
+        if (withoutArgs) {
             try {
-                return clazz.newInstance();
-            } catch (InstantiationException | IllegalAccessException e1) {
-                e1.printStackTrace();
-                System.exit(1);
+                instance = clazz.newInstance();
+            } catch (Exception ignored) {
             }
-            e.printStackTrace();
-            System.exit(1);
+        } else {
+            Constructor[] constructors = clazz.getDeclaredConstructors();
+            Object[] args = arguments.toArray();
+
+            for (Constructor constructor : constructors) {
+                if (constructor.getParameterCount() == args.length) {
+                    try {
+                        instance = constructor.newInstance(args);
+                        break;
+                    } catch (Exception ignored) {
+                    }
+                }
+            }
         }
 
-        return null;
+        return instance;
     }
 
     public static LinkedHashMap<String, Class<?>> getClasses(LinkedHashMap<String, ?> collection) {
