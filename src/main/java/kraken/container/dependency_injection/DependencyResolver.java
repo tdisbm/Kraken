@@ -73,6 +73,7 @@ public class DependencyResolver extends ContainerResolver {
             }
 
             loaded.put(instanceList[i], instance);
+            argumentList.clear();
             arguments.clear();
         }
 
